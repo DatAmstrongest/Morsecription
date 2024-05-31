@@ -1,5 +1,4 @@
-from pygame import mixer
-import time
+from pydub import AudioSegment
 
 CODE = {'A': '.-',     'B': '-...',   'C': '-.-.', 
         'D': '-..',    'E': '.',      'F': '..-.',
@@ -19,12 +18,15 @@ CODE = {'A': '.-',     'B': '-...',   'C': '-.-.',
 
 CODE_REVERSED = {value:key for key,value in CODE.items()}
 
-SHORT_GAP = 0.3
-LONG_GAP = 0.7
+SHORT_GAP = 300
+LONG_GAP = 700
 
 class Morse():
     def __init__(self):
-        self.mixer = mixer.init()
+        self.long_beep = AudioSegment.from_file("./sounds/morse-long-beep.mp3", format="mp3")
+        self.short_beep = AudioSegment.from_file("./sounds/morse-short-beep.mp3", format="mp3")
+        self.short_gap = AudioSegment.silent(duration=SHORT_GAP)
+        self.long_gap = AudioSegment.silent(duration=LONG_GAP)
 
     def convert_text_to_morse(self, plaintext):
         words = [word for word in plaintext.split(" ") if word.isalpha()]
@@ -46,7 +48,21 @@ class Morse():
             plaintext += CODE_REVERSED[morse_code]
         return plaintext
                 
-    def convert_morse_to_sound(self):
-        return 
+    def convert_morse_to_sound(self, cipher):
+        morse_codes = [morse_code for morse_code in cipher.split("/") if morse_code.strip()]
+        combined = self.short_gap
+        for morse_code in morse_codes:
+            if morse_code[0] == " ":
+                morse_code = morse_code[1:]
+                combined += self.long_gap
+            for char in morse_code:
+                if char == ".":
+                    combined += self.short_beep
+                else:
+                    combined += self.long_beep
+            combined += self.short_gap
+        combined += self.short_gap
+        combined.export("./morse.mp3", format="mp3")
+
 
 

@@ -47,6 +47,6 @@ print("\n**************************\nWelcome to the Text to Morse Code Converter
 plaintext = input("Please enter the text which you want to convert to morse code: ")
 
 morse = Morse()
-morse_result= morse.convert_morse_to_text(plaintext)
+morse_result= morse.convert_morse_to_sound(plaintext)
 
 print(f"Your message in morse code is {morse_result}")
