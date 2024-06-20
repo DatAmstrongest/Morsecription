@@ -1,0 +1,27 @@
+{% extends "header.html" %} {% block body %}
+<nav class="navbar navbar-expand-lg">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">
+      <img
+        src="{{ url_for('static', filename='assets/img/logo.png') }}"
+        alt=""
+        width="36"
+        height="30"
+        class="d-inline-block align-text-top"
+      />
+      Morsecription
+    </a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarText"
+      aria-controls="navbarText"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>
+{% block content %} {% endblock %} {% endblock %}

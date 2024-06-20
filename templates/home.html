@@ -1,0 +1,47 @@
+{% extends "navbar.html" %} 
+
+{% block content %} 
+
+{% macro text_input(label) -%}
+  <label for="{{ label }}TextArea" class="form-label"
+    >{{ label }}</label
+  >
+  <textarea
+    class="form-control"
+    id="{{ label }}TextArea"
+    name="{{ label }}TextArea"
+    rows="10"
+  ></textarea>
+{%- endmacro %}
+
+<div class="grid">
+  <div class="row mx-3 mt-5">
+    <div class="col mb-3">
+      {{ text_input('Plaintext') }} 
+    </div>
+    <div class="col d-flex justify-content-center mt-5 pt-5">
+      <img
+        id="gear"
+        src="{{ url_for('static', filename='assets/img/gear.svg') }}"
+        alt="My Happy SVG"
+        height="125"
+        width="125"
+      />
+    </div>
+    <div class="col" <div class="mb-3">
+      {{ text_input('Ciphertext') }} 
+    </div>
+  </div>
+  <div class="row mt-5 mx-3">
+    <div class="col">
+      <button id="encryptButton" class="encrypt-btn btn form-control">Encrypt</button>
+    </div>
+    <div class="col">
+    </div>
+    <div class="col">
+      <button id="decryptButton" class="encrypt-btn btn form-control">Decrypt</button>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

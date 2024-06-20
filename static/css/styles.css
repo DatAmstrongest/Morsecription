@@ -1,0 +1,80 @@
+body {
+  background-color: #eeeeee;
+}
+nav {
+  background-color: #373a40;
+  color: #dc5f00;
+}
+a {
+  color: inherit;
+}
+
+.encrypt-btn{
+  background-color: #dc5f00;
+  color: #eeeeee;
+}
+
+.encrypt-btn:hover {
+  filter: brightness(95%);
+  color: #eeeeee;
+}
+
+.encrypt-btn:active{
+  filter: brightness(90%);
+}
+
+.encrypt-btn:focus{
+  background-color: #dc5f00;
+  color: #eeeeee;
+  box-shadow: none;
+}
+
+
+.sound-btn{
+  background-color: #686D76;
+  color:#EEEEEE;
+
+}
+
+.sound-btn:hover{
+  filter: brightness(95%);
+  color:#EEEEEE;
+}
+
+.sound-btn:active{
+  filter: brightness(90%);
+}
+
+.sound-btn:focus{
+  background-color: #686D76;
+  color:#EEEEEE;
+  box-shadow: none;
+
+}
+
+.rotate-img-right {
+  animation: rotation-right 6s infinite linear;
+}
+
+.rotate-img-left {
+  animation: rotation-left 6s infinite linear;
+}
+
+@keyframes rotation-right {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotation-left {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+

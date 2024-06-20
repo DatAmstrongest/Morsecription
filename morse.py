@@ -62,7 +62,7 @@ class Morse():
                     combined += self.long_beep
             combined += self.short_gap
         combined += self.short_gap
-        combined.export("./morse.mp3", format="mp3")
+        combined.export("./static/morse.mp3", format="mp3")
 
 
 
