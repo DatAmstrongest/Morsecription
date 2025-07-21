@@ -36,7 +36,9 @@ def decrypt():
     plaintext = morse.convert_morse_to_text(ciphertext)
     return {"plaintext":plaintext}
 
-
+@app.route("/play", methods=["POST"])
+def play():
+    json_data = json.loads(request.get_data().decode("utf-8"))
 
 if __name__ == "__main__":
     app.run(debug=True, port=PORT)
