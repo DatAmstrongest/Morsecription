@@ -27,6 +27,7 @@ def encrypt():
     json_data = json.loads(request.get_data().decode("utf-8"))
     plaintext = json_data["plaintext"]
     ciphertext = morse.convert_text_to_morse(plaintext)
+    sound = morse.convert_morse_to_sound(ciphertext)
     return {"ciphertext":ciphertext}
 
 @app.route("/decrypt", methods=["POST"])
@@ -35,10 +36,6 @@ def decrypt():
     ciphertext = json_data["ciphertext"]
     plaintext = morse.convert_morse_to_text(ciphertext)
     return {"plaintext":plaintext}
-
-@app.route("/play", methods=["POST"])
-def play():
-    json_data = json.loads(request.get_data().decode("utf-8"))
 
 if __name__ == "__main__":
     app.run(debug=True, port=PORT)
