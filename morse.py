@@ -36,6 +36,7 @@ class Morse():
                 morse_code = CODE[char]
                 morse_result += morse_code+"/"
             morse_result += " "
+        self.convert_morse_to_sound(plaintext)
         return morse_result
 
     def convert_morse_to_text(self, cipher):
@@ -62,7 +63,7 @@ class Morse():
                     combined += self.long_beep
             combined += self.short_gap
         combined += self.short_gap
-        combined.export("./static/morse.mp3", format="mp3")
+        return combined
 
 
 

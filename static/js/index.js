@@ -21,8 +21,35 @@ $(document).ready(function() {
                 }),
                 cache: false,
                 success: function(html){
-                    $("#gear").removeClass("rotate-img-right")
-                    $("#CiphertextTextArea").val(html.ciphertext)
+			$("#gear").removeClass("rotate-img-right");
+      		    $("#CiphertextTextArea").val(html.ciphertext);
+
+		    fetch("/sound", {
+			method: "POST",
+			headers: {
+			    "Content-Type": "application/json"
+			},
+			body: JSON.stringify({
+			    ciphertext: $("#CiphertextTextArea").val()
+			})
+		    })
+		    .then(response => {
+			const contentType = response.headers.get("Content-Type");
+			if (!response.ok || !contentType.startsWith("audio")) {
+			    throw new Error("Invalid response from /sound");
+			}
+			return response.blob();
+		    })
+		    .then(blob => {
+			const audioUrl = URL.createObjectURL(blob);
+			const audioEl = document.getElementById("audioButton");
+			audioEl.src = audioUrl;
+			audioEl.load();
+			audioEl.style.display = "block";
+		    })
+		    .catch(error => {
+			console.error("Failed to fetch audio:", error);
+		    });
 
                 }
             });
@@ -45,24 +72,6 @@ $(document).ready(function() {
                 success: function(html){
                     $("#gear").removeClass("rotate-img-left")
                     $("#PlaintextTextArea").val(html.plaintext)
-                }
-            });
-        })
-    })
-    
-    $("#audioButton").click(function(){
-        sleep(SLEEP_TIME).then(() =>{
-            $.ajax({
-                type: "POST",
-                url: "http://localhost:5002/toSound",
-                headers:{ 'Content-Type': 'application/json'},
-                dataType: "json",
-                data: JSON.stringify(
-                {
-                    ciphertext: $("#CiphertextTextArea").val()
-                }),
-                success: function(result){
-                    $("#mp3Download").click()
                 }
             });
         })

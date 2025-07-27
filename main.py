@@ -3,6 +3,7 @@ from flask import Flask, render_template, request, send_file, make_response, jso
 from flask_cors import CORS
 import base64
 import json
+import io
 
 PORT = 5002
 
@@ -27,7 +28,6 @@ def encrypt():
     json_data = json.loads(request.get_data().decode("utf-8"))
     plaintext = json_data["plaintext"]
     ciphertext = morse.convert_text_to_morse(plaintext)
-    sound = morse.convert_morse_to_sound(ciphertext)
     return {"ciphertext":ciphertext}
 
 @app.route("/decrypt", methods=["POST"])
@@ -36,6 +36,20 @@ def decrypt():
     ciphertext = json_data["ciphertext"]
     plaintext = morse.convert_morse_to_text(ciphertext)
     return {"plaintext":plaintext}
+
+@app.route("/sound", methods=["POST"])
+def sound():
+    json_data = json.loads(request.get_data().decode("utf-8"))
+    ciphertext = json_data["ciphertext"]
+    sound = morse.convert_morse_to_sound(ciphertext)
+    
+    buffer = io.BytesIO()
+    sound.export(buffer, format="mp3")
+    buffer.seek(0)
+
+    return send_file(buffer, mimetype="audio/mp3", as_attachment=False, download_name="sound.mp3") 
+
+
 
 if __name__ == "__main__":
     app.run(debug=True, port=PORT, host="0.0.0.0")

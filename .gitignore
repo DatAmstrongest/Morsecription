@@ -2,3 +2,5 @@ my-venv/
 venv/
 __pycache__
 *.mp3
+*.swp
+*.swo
