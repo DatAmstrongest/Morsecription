@@ -60,6 +60,17 @@ a {
   animation: rotation-left 6s infinite linear;
 }
 
+.audioDiv {
+  margin: auto;
+  margin-top: 3rem;
+  max-width: fit-content;
+}
+
+.downloadDiv {
+  margin: auto;
+  max-width: fit-content;
+}
+
 @keyframes rotation-right {
   from {
     transform: rotate(0deg);

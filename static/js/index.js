@@ -43,9 +43,13 @@ $(document).ready(function() {
 		    .then(blob => {
 			const audioUrl = URL.createObjectURL(blob);
 			const audioEl = document.getElementById("audioButton");
+			const download = document.getElementById("download");
+
+			download.href = audioUrl;
 			audioEl.src = audioUrl;
 			audioEl.load();
 			audioEl.style.display = "block";
+			download.style.display = "block";
 		    })
 		    .catch(error => {
 			console.error("Failed to fetch audio:", error);
