@@ -12,7 +12,7 @@ $(document).ready(function() {
         sleep(SLEEP_TIME).then(() =>{
             $.ajax({
                 type: "POST",
-                url: "http://localhost:5002/encrypt",
+                url: "/encrypt",
                 headers:{ 'Content-Type': 'application/json'},
                 dataType: "json",
                 data: JSON.stringify(
@@ -66,7 +66,7 @@ $(document).ready(function() {
         sleep(SLEEP_TIME).then(() =>{
             $.ajax({
                 type: "POST",
-                url: "http://localhost:5002/decrypt",
+                url: "/decrypt",
                 headers:{ 'Content-Type': 'application/json'},
                 dataType: "json",
                 data: JSON.stringify(
