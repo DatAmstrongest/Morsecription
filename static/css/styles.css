@@ -8,7 +8,21 @@ nav {
 a {
   color: inherit;
 }
+textarea {
+    resize: none;
+}
 
+#Plaintext_count_message {
+  background-color: smoke;
+  margin-top: -20px;
+  margin-right: 5px;
+}
+
+#Ciphertext_count_message {
+  background-color: smoke;
+  margin-top: -20px;
+  margin-right: 5px;
+}
 .encrypt-btn{
   background-color: #dc5f00;
   color: #eeeeee;

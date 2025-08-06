@@ -3,9 +3,27 @@ const SLEEP_TIME = 500
 // sleep time expects milliseconds
 function sleep (time) {
     return new Promise((resolve) => setTimeout(resolve, time));
-  }
+}
 
-$(document).ready(function() {
+$(document).ready(function() {   
+    var text_max = 200;
+    $('#Ciphertext_count_message').html('0 / ' + text_max );
+    $('#Plaintext_count_message').html('0 / ' + text_max );
+
+    $('#PlaintextTextArea').keyup(function() {
+      var text_length = $('#PlaintextTextArea').val().length;
+      var text_remaining = text_max - text_length;
+
+      $('#Plaintext_count_message').html(text_length + ' / ' + text_max);
+    });
+
+    $('#CiphertextTextArea').keyup(function() {
+      var text_length = $('#CiphertextTextArea').val().length;
+      var text_remaining = text_max - text_length;
+
+      $('#Ciphertext_count_message').html(text_length + ' / ' + text_max);
+    });
+
     $('#encryptButton').click(function(){
         $("#gear").removeClass("rotate-img-left")
         $("#gear").addClass("rotate-img-right")
