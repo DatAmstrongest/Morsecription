@@ -53,4 +53,4 @@ def sound():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=PORT, host=os.environ.get('HOST_URL'))
+    app.run(debug=True, port=PORT, host='0.0.0.0')
