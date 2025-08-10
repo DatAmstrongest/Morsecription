@@ -1,5 +1,5 @@
 from pydub import AudioSegment
-
+#TODO: Add morse code for punctuation
 CODE = {'A': '.-',     'B': '-...',   'C': '-.-.', 
         'D': '-..',    'E': '.',      'F': '..-.',
         'G': '--.',    'H': '....',   'I': '..',
@@ -29,6 +29,8 @@ class Morse():
         self.long_gap = AudioSegment.silent(duration=LONG_GAP)
 
     def convert_text_to_morse(self, plaintext):
+        if len(plaintext)>200:
+            raise Exception("Plaintext cannot be bigger than 200 characters.")
         words = [word for word in plaintext.split(" ") if word.isalpha()]
         morse_result = ""
         for word in words:
@@ -40,6 +42,8 @@ class Morse():
         return morse_result
 
     def convert_morse_to_text(self, cipher):
+        if len(cipher)>200:
+            raise Exception("Ciphertext cannot be longer than 200 characters.")
         morse_codes = [morse_code for morse_code in cipher.split("/") if morse_code.strip()]
         plaintext = ""
         for morse_code in morse_codes:

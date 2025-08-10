@@ -27,16 +27,26 @@ def index():
 @app.route("/encrypt", methods=["POST"])
 def encrypt():
     json_data = json.loads(request.get_data().decode("utf-8"))
+    ciphertext = ""
     plaintext = json_data["plaintext"]
-    ciphertext = morse.convert_text_to_morse(plaintext)
-    return {"ciphertext":ciphertext}
+    errorMessage = ""
+    try:
+        ciphertext = morse.convert_text_to_morse(plaintext)
+    except Exception as e:
+        errorMessage = str(e)
+    return {"ciphertext":ciphertext, "error":errorMessage}
 
 @app.route("/decrypt", methods=["POST"])
 def decrypt():
     json_data = json.loads(request.get_data().decode("utf-8"))
+    plaintext = ""
     ciphertext = json_data["ciphertext"]
-    plaintext = morse.convert_morse_to_text(ciphertext)
-    return {"plaintext":plaintext}
+    errorMessage = ""
+    try:
+        plaintext = morse.convert_morse_to_text(ciphertext)
+    except Exception as e:
+        errorMessage = str(e)
+    return {"plaintext":plaintext, "error":errorMessage}
 
 @app.route("/sound", methods=["POST"])
 def sound():

@@ -4,8 +4,14 @@ const SLEEP_TIME = 500
 function sleep (time) {
     return new Promise((resolve) => setTimeout(resolve, time));
 }
-
+function showError(errorModal, message){
+   document.getElementById("errorModalBody").innerHTML=message;
+   errorModal.show();
+}
+//TODO: Refactoring in API calls is needed
 $(document).ready(function() {   
+    const errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+
     var text_max = 200;
     $('#Ciphertext_count_message').html('0 / ' + text_max );
     $('#Plaintext_count_message').html('0 / ' + text_max );
@@ -39,8 +45,13 @@ $(document).ready(function() {
                 }),
                 cache: false,
                 success: function(html){
-			$("#gear").removeClass("rotate-img-right");
+		    $("#gear").removeClass("rotate-img-right");
       		    $("#CiphertextTextArea").val(html.ciphertext);
+
+		    if (html.error.length>0){
+	            	showError(errorModal, html.error);
+			return;
+	            }
 
 		    fetch("/sound", {
 			method: "POST",
@@ -78,6 +89,8 @@ $(document).ready(function() {
         });
         
     })
+    //TODO: Add audio api call also here
+    //TODO: Refactor audio call
     $("#decryptButton").click(() => {
         $("#gear").removeClass("rotate-img-right")
         $("#gear").addClass("rotate-img-left")
@@ -94,6 +107,11 @@ $(document).ready(function() {
                 success: function(html){
                     $("#gear").removeClass("rotate-img-left")
                     $("#PlaintextTextArea").val(html.plaintext)
+
+		    if (html.error.length>0){
+	            	showError(errorModal, html.error);
+			return;
+	            }
                 }
             });
         })
