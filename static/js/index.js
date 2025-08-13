@@ -4,11 +4,47 @@ const SLEEP_TIME = 500
 function sleep (time) {
     return new Promise((resolve) => setTimeout(resolve, time));
 }
+
 function showError(errorModal, message){
    document.getElementById("errorModalBody").innerHTML=message;
    errorModal.show();
 }
-//TODO: Refactoring in API calls is needed
+
+function postSound(){
+    fetch("/sound", {
+	method: "POST",
+	headers: {
+	    "Content-Type": "application/json"
+	},
+	body: JSON.stringify({
+	    ciphertext: $("#CiphertextTextArea").val()
+	})
+    })
+    .then(response => {
+	const contentType = response.headers.get("Content-Type");
+	if (!response.ok || !contentType.startsWith("audio")) {
+	    throw new Error("Invalid response from /sound");
+	}
+	return response.blob();
+    })
+    .then(blob => {
+	const audioUrl = URL.createObjectURL(blob);
+	const audioEl = document.getElementById("audioButton");
+	const download = document.getElementById("download");
+
+	download.href = audioUrl;
+	audioEl.src = audioUrl;
+	audioEl.load();
+	audioEl.style.display = "block";
+	download.style.display = "block";
+    })
+    .catch(error => {
+	console.error("Failed to fetch audio:", error);
+    });
+
+}
+
+
 $(document).ready(function() {   
     const errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
 
@@ -51,45 +87,13 @@ $(document).ready(function() {
 	            	showError(errorModal, html.error);
 			return;
 	            }
-
-		    fetch("/sound", {
-			method: "POST",
-			headers: {
-			    "Content-Type": "application/json"
-			},
-			body: JSON.stringify({
-			    ciphertext: $("#CiphertextTextArea").val()
-			})
-		    })
-		    .then(response => {
-			const contentType = response.headers.get("Content-Type");
-			if (!response.ok || !contentType.startsWith("audio")) {
-			    throw new Error("Invalid response from /sound");
-			}
-			return response.blob();
-		    })
-		    .then(blob => {
-			const audioUrl = URL.createObjectURL(blob);
-			const audioEl = document.getElementById("audioButton");
-			const download = document.getElementById("download");
-
-			download.href = audioUrl;
-			audioEl.src = audioUrl;
-			audioEl.load();
-			audioEl.style.display = "block";
-			download.style.display = "block";
-		    })
-		    .catch(error => {
-			console.error("Failed to fetch audio:", error);
-		    });
+		    postSound();
 
                 }
             });
         });
         
     })
-    //TODO: Add audio api call also here
-    //TODO: Refactor audio call
     $("#decryptButton").click(() => {
         $("#gear").removeClass("rotate-img-right")
         $("#gear").addClass("rotate-img-left")
@@ -111,6 +115,7 @@ $(document).ready(function() {
 	            	showError(errorModal, html.error);
 			return;
 	            }
+		   postSound();
                 }
             });
         })
