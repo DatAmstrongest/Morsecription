@@ -1,25 +1,36 @@
 from pydub import AudioSegment
-#TODO: Add morse code for punctuation
-CODE = {'A': '.-',     'B': '-...',   'C': '-.-.', 
-        'D': '-..',    'E': '.',      'F': '..-.',
-        'G': '--.',    'H': '....',   'I': '..',
-        'J': '.---',   'K': '-.-',    'L': '.-..',
-        'M': '--',     'N': '-.',     'O': '---',
-        'P': '.--.',   'Q': '--.-',   'R': '.-.',
-        'S': '...',    'T': '-',      'U': '..-',
-        'V': '...-',   'W': '.--',    'X': '-..-',
-        'Y': '-.--',   'Z': '--..',
 
-        '0': '-----',  '1': '.----',  '2': '..---',
-        '3': '...--',  '4': '....-',  '5': '.....',
-        '6': '-....',  '7': '--...',  '8': '---..',
-        '9': '----.' 
-        }
+CODE = {
+    # Letters
+    'A': '.-',    'B': '-...',  'C': '-.-.',  'D': '-..',   'E': '.',
+    'F': '..-.',  'G': '--.',   'H': '....',  'I': '..',    'J': '.---',
+    'K': '-.-',   'L': '.-..',  'M': '--',    'N': '-.',    'O': '---',
+    'P': '.--.',  'Q': '--.-',  'R': '.-.',   'S': '...',   'T': '-',
+    'U': '..-',   'V': '...-',  'W': '.--',   'X': '-..-',  'Y': '-.--',
+    'Z': '--..',
+
+    # Digits
+    '0': '-----', '1': '.----', '2': '..---', '3': '...--', '4': '....-',
+    '5': '.....', '6': '-....', '7': '--...', '8': '---..', '9': '----.',
+
+    # Punctuation (common ITU / widely used)
+    '.': '.-.-.-',  ',': '--..--',  '?': '..--..',  "'": '.----.',
+    '!': '-.-.--',  '/': '-..-.',   '(': '-.--.',   ')': '-.--.-',
+    '&': '.-...',   ':': '---...',  ';': '-.-.-.',  '=': '-...-',
+    '+': '.-.-.',   '-': '-....-',  '_': '..--.-',  '"': '.-..-.',
+    '$': '...-..-', '@': '.--.-.',
+}
 
 CODE_REVERSED = {value:key for key,value in CODE.items()}
 
 SHORT_GAP = 300
 LONG_GAP = 700
+
+def check_word(word):
+    for char in word.upper():
+        if char not in CODE: 
+            raise Exception(f"{word} is not in valid format")
+    return True
 
 class Morse():
     def __init__(self):
@@ -31,7 +42,7 @@ class Morse():
     def convert_text_to_morse(self, plaintext):
         if len(plaintext)>200:
             raise Exception("Plaintext cannot be bigger than 200 characters.")
-        words = [word for word in plaintext.split(" ") if word.isalpha()]
+        words = [word for word in plaintext.split(" ") if check_word(word)]
         morse_result = ""
         for word in words:
             for char in word.upper():
