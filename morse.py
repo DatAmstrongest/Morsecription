@@ -53,8 +53,8 @@ class Morse():
         return morse_result
 
     def convert_morse_to_text(self, cipher):
-        if len(cipher)>200:
-            raise Exception("Ciphertext cannot be longer than 200 characters.")
+        if len(cipher)>1000:
+            raise Exception("Ciphertext cannot be longer than 1000 characters.")
         morse_codes = [morse_code for morse_code in cipher.split("/") if morse_code.strip()]
         plaintext = ""
         for morse_code in morse_codes:

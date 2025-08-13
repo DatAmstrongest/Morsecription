@@ -12,9 +12,8 @@ function showError(errorModal, message){
 $(document).ready(function() {   
     const errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
 
-    var text_max = 200;
-    $('#Ciphertext_count_message').html('0 / ' + text_max );
-    $('#Plaintext_count_message').html('0 / ' + text_max );
+    $('#Ciphertext_count_message').html('0 / ' + 1000);
+    $('#Plaintext_count_message').html('0 / ' + 200);
 
     $('#PlaintextTextArea').keyup(function() {
       var text_length = $('#PlaintextTextArea').val().length;
