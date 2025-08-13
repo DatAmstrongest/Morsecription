@@ -53,16 +53,16 @@ $(document).ready(function() {
 
     $('#PlaintextTextArea').keyup(function() {
       var text_length = $('#PlaintextTextArea').val().length;
-      var text_remaining = text_max - text_length;
+      var text_remaining = 200 - text_length;
 
-      $('#Plaintext_count_message').html(text_length + ' / ' + text_max);
+      $('#Plaintext_count_message').html(text_length + ' / ' + 200);
     });
 
     $('#CiphertextTextArea').keyup(function() {
       var text_length = $('#CiphertextTextArea').val().length;
-      var text_remaining = text_max - text_length;
+      var text_remaining = 1000- text_length;
 
-      $('#Ciphertext_count_message').html(text_length + ' / ' + text_max);
+      $('#Ciphertext_count_message').html(text_length + ' / ' + 1000);
     });
 
     $('#encryptButton').click(function(){

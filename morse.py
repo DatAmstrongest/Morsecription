@@ -29,7 +29,12 @@ LONG_GAP = 700
 def check_word(word):
     for char in word.upper():
         if char not in CODE: 
-            raise Exception(f"{word} is not in valid format")
+            raise Exception(f"{char} is not in valid format")
+    return True
+
+def check_morse_code(morse):
+    if morse not in CODE_REVERSED:
+        raise Exception(f"{morse} is not in valid format")
     return True
 
 class Morse():
@@ -49,13 +54,15 @@ class Morse():
                 morse_code = CODE[char]
                 morse_result += morse_code+"/"
             morse_result += " "
+        morse_result = morse_result[:-2]
         self.convert_morse_to_sound(plaintext)
         return morse_result
 
     def convert_morse_to_text(self, cipher):
         if len(cipher)>1000:
             raise Exception("Ciphertext cannot be longer than 1000 characters.")
-        morse_codes = [morse_code for morse_code in cipher.split("/") if morse_code.strip()]
+        morse_codes = [morse_code for morse_code in cipher.split("/") if check_morse_code(morse_code.strip())]
+        print(morse_codes)
         plaintext = ""
         for morse_code in morse_codes:
             if morse_code[0] == " ":
